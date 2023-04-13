@@ -1,5 +1,5 @@
 import symbol.*;
-import static symbol.Symbol.Type.*;
+import static symbol.Symbol.Type.*; 
 
 import java.util.*;
 import static java.util.Map.entry;
@@ -7,6 +7,20 @@ public class GrammarGenerator {
     public static void main(String[] args) {
         CFG cfg = new CFG();
         cfg.startSymbol = new Symbol(NONTERMINAL, "tiger-program");
+        /*
+        cfg.prodRules = new HashMap<>(Map.ofEntries(
+            entry("Fee", new HashSet<>(Set.of(
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Fee"),
+                    new Symbol(TERMINAL, "a")
+                )),
+                new ArrayList<>(List.of(
+                    new Symbol(TERMINAL, "b")
+                ))
+            )))
+        ));
+        */
+
         cfg.prodRules = new HashMap<>(Map.ofEntries(
             entry("tiger-program", new HashSet<>(Set.of(
                 new ArrayList<>(List.of(
@@ -329,5 +343,11 @@ public class GrammarGenerator {
                 ))
             )))
         ));
+
+        cfg.nonTerminals = new HashSet<>(cfg.prodRules.keySet());
+        RecursionRemover.removeRecursion(cfg);
+        cfg.prodRules.entrySet().forEach(entry -> {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        });
     }
 }

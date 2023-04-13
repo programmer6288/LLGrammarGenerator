@@ -10,4 +10,11 @@ public class Symbol {
         this.type = type;
         this.rep = rep;
     }
+    public String toString() {
+        if (type == Type.TERMINAL) {
+            return rep;
+        } else {
+            return "<" + rep + ">";
+        }
+    }
 }
