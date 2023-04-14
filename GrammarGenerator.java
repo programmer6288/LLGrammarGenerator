@@ -22,6 +22,40 @@ public class GrammarGenerator {
         */
 
         cfg.prodRules = new HashMap<>(Map.ofEntries(
+            entry("Expr", new HashSet<>(Set.of(
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Expr"),
+                    new Symbol(TERMINAL, "+"),
+                    new Symbol(NONTERMINAL, "Term")
+                )),
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Expr"),
+                    new Symbol(TERMINAL, "-"),
+                    new Symbol(NONTERMINAL, "Term")
+                )),
+                new ArrayList<>(List.of(
+                    new Symbol(TERMINAL, "Term")
+                ))
+            ))),
+            entry("Term", new HashSet<>(Set.of(
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Term"),
+                    new Symbol(TERMINAL, "*"),
+                    new Symbol(NONTERMINAL, "Factor")
+                )),
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Term"),
+                    new Symbol(TERMINAL, "/"),
+                    new Symbol(NONTERMINAL, "Factor")
+                )),
+                new ArrayList<>(List.of(
+                    new Symbol(NONTERMINAL, "Factor")
+                ))
+            )))
+        ));
+
+        /*
+        cfg.prodRules = new HashMap<>(Map.ofEntries(
             entry("tiger-program", new HashSet<>(Set.of(
                 new ArrayList<>(List.of(
                     new Symbol(TERMINAL, "main"),
@@ -343,6 +377,7 @@ public class GrammarGenerator {
                 ))
             )))
         ));
+        */
 
         cfg.nonTerminals = new HashSet<>(cfg.prodRules.keySet());
         RecursionRemover.removeRecursion(cfg);
